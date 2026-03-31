@@ -2,9 +2,9 @@ from packaging.version import parse
 
 from parser.packages_parser import parse_requirements
 from utils.version_utils import get_release_gap_py, gap_version_scoring_py
-from services.pypi_service import fetch_pypi_data
-from services.vulnerabilities import fetch_osv_vulnerabilities
-
+from adapters.pypi_service import fetch_pypi_data, get_all_pypi_versions
+from adapters.osv_vulnerabilities import fetch_osv_vulnerabilities
+from utils.vulnerability_utils import get_vulnerable_versions
 # ----------------- Parse requirements ----------------------
 deps = parse_requirements("requirements.txt")
 
@@ -82,6 +82,14 @@ Version Gap: {version_gap}
 Score: {score}
 """)
 
-    osv = fetch_osv_vulnerabilities("litellm", "1.82.8")
-    print(osv)
+    package_name= dep["name"]
+    installed_version = dep["installed_version"]
+
+    osv = fetch_osv_vulnerabilities(package_name, installed_version)
+    fetch_all_versions = get_all_pypi_versions(package_name)
+    all_versions = fetch_all_versions.get("all_versions")
+    vuln = get_vulnerable_versions("litellm", osv, all_versions)
+    
+    print("Vuln version list count: ", len(vuln))
+    
 print(f"\nTotal Project Risk Score: {total_score}")

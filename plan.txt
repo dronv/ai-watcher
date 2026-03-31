@@ -1,0 +1,11 @@
+scanners → Dependency
+              ↓
+adapters → fetch vulnerabilities
+              ↓
+normalizers → convert → Vulnerability
+              ↓
+analyzers:
+    - does vuln affect installed version?
+    - calculate risk
+              ↓
+LLM → final reasoning
