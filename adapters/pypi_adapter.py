@@ -7,18 +7,8 @@ def fetch_pypi_data(package_name):
   
         if response.status_code == 200:
             res = response.json()
-            name = res["info"]["name"]
-            latest_version = res["info"]["version"]
-            all_releases = list(res["releases"].keys())
-            release_count = len(res["releases"])
-
-            data = {
-                "name" : name,
-                "latest_version": latest_version,
-                "release_count" : release_count,
-                "all_releases" : all_releases
-            }
-            return data
+            
+            return res
         else:
             return {"error":"NOT_FOUND", "package":package_name}
     except requests.exceptions.RequestException as e:
