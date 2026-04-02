@@ -39,7 +39,7 @@ Respond ONLY in JSON format:
 def call_llm(prompt):
     from openai import OpenAI
 
-    client = OpenAI(api_key="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")
+    client = OpenAI(api_key="")
 
     response = client.chat.completions.create(
         model= "gpt-5.4-mini",
