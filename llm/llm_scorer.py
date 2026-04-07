@@ -6,7 +6,8 @@ You are a senior security engineer analyzing software dependencies.
 
 Analyze the following dependency risk data:
 Name: {analysis['name']}
-Installed Version: {analysis['installed_version']}
+Version Spec: {analysis['version_spec']}
+Resolved Version: {analysis['resolved_version']}
 Latest Version: {analysis['latest_version']}
 
 Outdated: {analysis['is_outdated']}

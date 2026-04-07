@@ -7,12 +7,16 @@ def safe_parse(version):
         return None
     
 def is_outdated(installed, latest):
+    print(installed)
+    print(latest)
     v_installed = safe_parse(installed)
     v_latest = safe_parse(latest)
-    
+    print(v_installed)
+    print(v_latest)
     if not v_installed or not v_latest:
+        print("ERROR")
         return False
-    
+        
     return v_installed < v_latest
 
 def get_all_versions(releases):
@@ -47,6 +51,8 @@ def get_version_gap(installed, latest):
             (v_latest.micro - v_installed.micro) 
 
 def gap_version_scoring(gap):
+    if gap < 0:
+        return "UNKNOWN"
     if gap >=50:
         return "HIGH"
     elif gap >= 10:
@@ -68,14 +74,14 @@ def is_version_in_range(version, specifier):
     except:
         return False
     
-def is_vulnerable(installed_version, vulnerability_ranges):
+def is_vulnerable(resolved_version, vulnerability_ranges):
     if not vulnerability_ranges:
         return "UNKNOWN"
     
     for spec in vulnerability_ranges:
-        if is_version_in_range(installed_version, spec):
+        if is_version_in_range(resolved_version, spec):
             return True
     return False
 
-def is_known_bad_version(installed_version, bad_versions):
-    return installed_version in bad_versions
+def is_known_bad_version(resolved_version, bad_versions):
+    return resolved_version in bad_versions

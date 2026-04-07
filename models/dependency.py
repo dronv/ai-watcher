@@ -8,7 +8,9 @@ class Dependency:
     ecosystem: str # "python" | "npm"
 
     #version info
-    installed_version: Optional[str] = None
+    version_spec: Optional[str] = None
+    resolved_version: Optional[str] = None
+    is_resolved: Optional[bool] = None
     latest_version: Optional[str] = None
 
     #version intelligence
@@ -32,7 +34,7 @@ class Dependency:
 
 
     def is_outdated(self)->bool:
-        return self.installed_version != self.latest_version
+        return self.resolved_version != self.latest_version
     
     def has_security_issues(self)->bool:
         return bool(self.vulnerabilities or self.malicious_versions)
